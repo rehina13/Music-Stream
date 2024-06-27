@@ -20,25 +20,22 @@ namespace UI
             Console.WriteLine("Please enter your username:");
             string username = Console.ReadLine();
 
-            Console.WriteLine("Hello, {username}! Please enter your Artist Choice.");
+            Console.WriteLine($"Hello, {username}! Please enter your music preferences.");
 
             MusicInfo musicInfo = new MusicInfo();
 
             Console.WriteLine("Enter artist:");
             musicInfo.Artist = Console.ReadLine();
 
-            Console.WriteLine("\nYour music stream choice is already done.");
-            
             Console.WriteLine("\nMusic Information:");
+            Console.WriteLine($"Artist: {musicInfo.Artist}");
 
+            Console.WriteLine("\nYour music stream choice is already done.");
 
-            // Initialize artist songs
             Dictionary<string, (string Album, string[] Songs)> artistSongs = ArtistSong.InitializeArtistSongs();
 
-            // Find and display songs by the entered artist
+           
             PlaylistSong.FindAndDisplaySongs(musicInfo.Artist, artistSongs);
-
-
 
             Console.ReadLine();
         }
