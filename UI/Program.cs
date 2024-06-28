@@ -8,6 +8,7 @@ namespace UI
     public class MusicInfo
     {
         public string Artist { get; set; }
+        public string SongsAndAlbum { get; set; }
     }
 
     class Program
@@ -34,10 +35,65 @@ namespace UI
 
             Dictionary<string, (string Album, string[] Songs)> artistSongs = ArtistSong.InitializeArtistSongs();
 
-           
             PlaylistSong.FindAndDisplaySongs(musicInfo.Artist, artistSongs);
 
             Console.ReadLine();
+        }
+    }
+
+    public class MusicOperator
+    {
+        private List<MusicInfo> infos;
+        private SqlDBData sqlData;
+
+        public MusicOperator()
+        {
+            infos = new List<MusicInfo>();
+            sqlData = new SqlDBData();
+        }
+
+        public List<MusicInfo> GetMusicInfos()
+        {
+            infos = sqlData.GetMusicInfos();
+            return infos;
+        }
+
+        public int AddMusicInfo(MusicInfo info)
+        {
+            return sqlData.AddMusicInfo(info.Artist, info.SongsAndAlbum);
+        }
+
+        public int UpdateMusicInfo(MusicInfo info)
+        {
+            return sqlData.UpdateMusicInfo(info.Artist, info.SongsAndAlbum);
+        }
+
+        public int DeleteMusicInfo(MusicInfo info)
+        {
+            return sqlData.DeleteMusicInfo(info.Artist);
+        }
+    }
+
+    public class SqlDBData
+    {
+        public List<MusicInfo> GetMusicInfos()
+        {
+            return new List<MusicInfo>();
+        }
+
+        public int AddMusicInfo(string artist, string songsAndAlbum)
+        {
+            return 1;
+        }
+
+        public int UpdateMusicInfo(string artist, string songsAndAlbum)
+        {
+            return 1;
+        }
+
+        public int DeleteMusicInfo(string artist)
+        {
+            return 1;
         }
     }
 }

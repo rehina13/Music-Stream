@@ -7,6 +7,7 @@ namespace MusicPlaylistDL
     public class User
     {
         public string Artist { get; set; }
+        public string SongsAndAlbum { get; set; }
     }
 
     public class SqlData
@@ -18,17 +19,16 @@ namespace MusicPlaylistDL
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
                 sqlConnection.Open();
-                sqlConnection.Close();
             }
         }
 
-        public static List<User> GetUsers()
+        public static List<User> GetMusicInfo()
         {
             List<User> users = new List<User>();
 
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
-                string selectStatement = "SELECT Artist, Songs and Album FROM users";
+                string selectStatement = "SELECT Artist, SongsAndAlbum FROM users";
                 SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
 
                 sqlConnection.Open();
@@ -40,6 +40,7 @@ namespace MusicPlaylistDL
                         users.Add(new User
                         {
                             Artist = reader["Artist"].ToString(),
+                            SongsAndAlbum = reader["SongsAndAlbum"].ToString()
                         });
                     }
                 }
@@ -50,16 +51,17 @@ namespace MusicPlaylistDL
             return users;
         }
 
-        public static int AddUser(string artist, string album)
+        public static int AddMusicInfo(string artist, string songsAndAlbum)
         {
             int success;
 
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
-                string insertStatement = "INSERT INTO users (Artist, Songs and Album) VALUES (@artist, @songs and album)";
+                string insertStatement = "INSERT INTO musicinfo (Artist, SongsAndAlbum) VALUES (@artist, @songsAndAlbum)";
                 SqlCommand insertCommand = new SqlCommand(insertStatement, sqlConnection);
 
                 insertCommand.Parameters.AddWithValue("@artist", artist);
+                insertCommand.Parameters.AddWithValue("@songsAndAlbum", songsAndAlbum);
 
                 sqlConnection.Open();
                 success = insertCommand.ExecuteNonQuery();
@@ -69,16 +71,17 @@ namespace MusicPlaylistDL
             return success;
         }
 
-        public static int UpdateUser(string artist)
+        public static int UpdateMusicInfo(string artist, string songsAndAlbum)
         {
             int success;
 
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
-                string updateStatement = "UPDATE users SET Songs and Album = @songs and calbum WHERE Artist = @artist";
+                string updateStatement = "UPDATE musicinfo SET SongsAndAlbum = @songsAndAlbum WHERE Artist = @artist";
                 SqlCommand updateCommand = new SqlCommand(updateStatement, sqlConnection);
 
                 updateCommand.Parameters.AddWithValue("@artist", artist);
+                updateCommand.Parameters.AddWithValue("@songsAndAlbum", songsAndAlbum);
 
                 sqlConnection.Open();
                 success = updateCommand.ExecuteNonQuery();
@@ -88,13 +91,13 @@ namespace MusicPlaylistDL
             return success;
         }
 
-        public static int DeleteUser(string artist)
+        public static int DeleteMusicInfo(string artist)
         {
             int success;
 
             using (SqlConnection sqlConnection = new SqlConnection(connectionString))
             {
-                string deleteStatement = "DELETE FROM users WHERE Artist = @artist";
+                string deleteStatement = "DELETE FROM musicinfo WHERE Artist = @artist";
                 SqlCommand deleteCommand = new SqlCommand(deleteStatement, sqlConnection);
 
                 deleteCommand.Parameters.AddWithValue("@artist", artist);
