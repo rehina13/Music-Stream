@@ -75,6 +75,9 @@ namespace UI
             Console.WriteLine("Music info updated successfully.");
         }
 
+
+
+
         static void DeleteMusicInfo(SqlData sqlData)
         {
             Console.WriteLine("Enter artist to delete:");
