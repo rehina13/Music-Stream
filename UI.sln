@@ -3,13 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.10.34916.146
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UI", "UI\UI.csproj", "{6591EBAB-FCF8-4727-BE5A-13F3391F7F69}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "UI", "UI\UI.csproj", "{6591EBAB-FCF8-4727-BE5A-13F3391F7F69}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Model", "Model\Model.csproj", "{B951D294-857F-4F74-9FA3-9DEFC52FFB13}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Model", "Model\Model.csproj", "{B951D294-857F-4F74-9FA3-9DEFC52FFB13}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicPlaylistDL", "MusicPlaylistDL\MusicPlaylistDL.csproj", "{6B35C885-EA08-4854-A3AF-F39EB2FFA5E0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MusicPlaylistDL", "MusicPlaylistDL\MusicPlaylistDL.csproj", "{6B35C885-EA08-4854-A3AF-F39EB2FFA5E0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PlaylistSongBL", "PlaylistSongBL\PlaylistSongBL.csproj", "{4D2DB340-6A94-462B-9894-2D87777B497C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PlaylistSongBL", "PlaylistSongBL\PlaylistSongBL.csproj", "{4D2DB340-6A94-462B-9894-2D87777B497C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MusicStream.API", "MusicStream.API\MusicStream.API.csproj", "{00FDCC50-CD78-4E65-ABEC-5AB9BE0FB7F9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{4D2DB340-6A94-462B-9894-2D87777B497C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4D2DB340-6A94-462B-9894-2D87777B497C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4D2DB340-6A94-462B-9894-2D87777B497C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{00FDCC50-CD78-4E65-ABEC-5AB9BE0FB7F9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{00FDCC50-CD78-4E65-ABEC-5AB9BE0FB7F9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{00FDCC50-CD78-4E65-ABEC-5AB9BE0FB7F9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{00FDCC50-CD78-4E65-ABEC-5AB9BE0FB7F9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

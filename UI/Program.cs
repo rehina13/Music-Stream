@@ -1,99 +1,98 @@
 ﻿using System;
 using System.Collections.Generic;
+using Model;
 using MusicPlaylistDL;
-using PlaylistSongBL;
 
 namespace UI
 {
-    public class MusicInfo
-    {
-        public string Artist { get; set; }
-        public string SongsAndAlbum { get; set; }
-    }
+ 
 
     class Program
     {
         static void Main(string[] args)
         {
+            SqlData sqlData = new SqlData();
+            string username;
+
             Console.WriteLine("Welcome to Your Music Stream Choice!");
 
-            // User login process
             Console.WriteLine("Please enter your username:");
-            string username = Console.ReadLine();
+            username = Console.ReadLine();
 
-            Console.WriteLine($"Hello, {username}! Please enter your music preferences.");
+            while (true)
+            {
+                Console.WriteLine("\nMenu:");
+                Console.WriteLine("1. Add Music Info");
+                Console.WriteLine("2. Update Music Info");
+                Console.WriteLine("3. Delete Music Info");
+                Console.WriteLine("4. View Music Info");
+                Console.WriteLine("5. Exit");
+                Console.Write("Please enter your choice: ");
+                string choice = Console.ReadLine();
 
-            MusicInfo musicInfo = new MusicInfo();
+                switch (choice)
+                {
+                    case "1":
+                        AddMusicInfo(sqlData, username);
+                        break;
+                    case "2":
+                        UpdateMusicInfo(sqlData, username);
+                        break;
+                    case "3":
+                        DeleteMusicInfo(sqlData);
+                        break;
+                    case "4":
+                        ViewMusicInfo(sqlData);
+                        break;
+                    case "5":
+                        return;
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.");
+                        break;
+                }
+            }
+        }
 
+        static void AddMusicInfo(SqlData sqlData, string username)
+        {
             Console.WriteLine("Enter artist:");
-            musicInfo.Artist = Console.ReadLine();
+            string artist = Console.ReadLine();
+            Console.WriteLine("Enter songs and album:");
+            string songsAndAlbum = Console.ReadLine();
+
+            sqlData.AddMusicInfo(username, artist, songsAndAlbum);
+            Console.WriteLine("Music info added successfully.");
+        }
+
+        static void UpdateMusicInfo(SqlData sqlData, string username)
+        {
+            Console.WriteLine("Enter artist to update:");
+            string artist = Console.ReadLine();
+            Console.WriteLine("Enter new songs and album:");
+            string songsAndAlbum = Console.ReadLine();
+
+            sqlData.DeleteMusicInfo(artist);
+            Console.WriteLine("Music info updated successfully.");
+        }
+
+        static void DeleteMusicInfo(SqlData sqlData)
+        {
+            Console.WriteLine("Enter artist to delete:");
+            string artist = Console.ReadLine();
+
+            sqlData.DeleteMusicInfo(artist);
+            Console.WriteLine("Music info deleted successfully.");
+        }
+
+        static void ViewMusicInfo(SqlData sqlData)
+        {
+            List<User> users = SqlData.GetMusicInfo();
 
             Console.WriteLine("\nMusic Information:");
-            Console.WriteLine($"Artist: {musicInfo.Artist}");
-
-            Console.WriteLine("\nYour music stream choice is already done.");
-
-            Dictionary<string, (string Album, string[] Songs)> artistSongs = ArtistSong.InitializeArtistSongs();
-
-            PlaylistSong.FindAndDisplaySongs(musicInfo.Artist, artistSongs);
-
-            Console.ReadLine();
-        }
-    }
-
-    public class MusicOperator
-    {
-        private List<MusicInfo> infos;
-        private SqlDBData sqlData;
-
-        public MusicOperator()
-        {
-            infos = new List<MusicInfo>();
-            sqlData = new SqlDBData();
-        }
-
-        public List<MusicInfo> GetMusicInfos()
-        {
-            infos = sqlData.GetMusicInfos();
-            return infos;
-        }
-
-        public int AddMusicInfo(MusicInfo info)
-        {
-            return sqlData.AddMusicInfo(info.Artist, info.SongsAndAlbum);
-        }
-
-        public int UpdateMusicInfo(MusicInfo info)
-        {
-            return sqlData.UpdateMusicInfo(info.Artist, info.SongsAndAlbum);
-        }
-
-        public int DeleteMusicInfo(MusicInfo info)
-        {
-            return sqlData.DeleteMusicInfo(info.Artist);
-        }
-    }
-
-    public class SqlDBData
-    {
-        public List<MusicInfo> GetMusicInfos()
-        {
-            return new List<MusicInfo>();
-        }
-
-        public int AddMusicInfo(string artist, string songsAndAlbum)
-        {
-            return 1;
-        }
-
-        public int UpdateMusicInfo(string artist, string songsAndAlbum)
-        {
-            return 1;
-        }
-
-        public int DeleteMusicInfo(string artist)
-        {
-            return 1;
+            foreach (User user in users)
+            {
+                Console.WriteLine($"Artist: {user.Artist}, Songs and Album: {user.SongsAndAlbum}");
+            }
         }
     }
 }
