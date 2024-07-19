@@ -10,9 +10,9 @@ namespace MusicPlaylistDL
     public class MusicDL
     {
         List<User> users = new List<User>();
-        public void AddMusicInfo(User users)
+        public void AddMusicInfo(User user)
         {
-            users.Add(users);
+            users.Add(user);
         }
         public List<User> GetMusicInfo()
         {

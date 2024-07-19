@@ -19,22 +19,22 @@ namespace MusicPlaylistAPI.Controllers
         [HttpGet]
         public ActionResult<IEnumerable<User>> Get()
         {
-            var users = _sqlData.GetMusicInfo();
+            var users = SqlData.GetMusicInfo();
             return Ok(users);
         }
 
         [HttpPost]
         public IActionResult Post([FromBody] User user)
         {
-            _sqlData.AddMusicInfo( user.Artist, user.SongsAndAlbum);
+            _sqlData.AddMusicInfo(user.username, user.Artist, user.SongsAndAlbum);
             return Ok();
         }
 
         [HttpPatch("{artist}")]
         public IActionResult Patch(string artist, [FromBody] User user)
         {
-           
-            _sqlData.UpdateMusicInfo(artist, user.Artist, user.SongsAndAlbum);
+            User oldUser = new User { Artist = artist };
+            _sqlData.UpdateMusicInfo(oldUser, user);
             return Ok();
         }
 

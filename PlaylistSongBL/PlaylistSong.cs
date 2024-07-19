@@ -1,5 +1,6 @@
-﻿using MusicPlaylistDL;
+﻿using System.Collections.Generic;
 using Model;
+using MusicPlaylistDL;
 
 namespace PlaylistSongBL
 {
@@ -14,22 +15,24 @@ namespace PlaylistSongBL
 
         public List<User> GetMusicInfo()
         {
-            return _dataService.GetMusicInfo();
+            return SqlData.GetMusicInfo();
         }
 
-        public void AddMusicInfo(string username, string Artist, string songsAndAlbum)
+        public void AddMusicInfo(string username, string artist, string songsAndAlbum)
         {
-            _dataService.AddMusicInfo(new User { username = username, Artist = Artist, SongsAndAlbum = songsAndAlbum });
+            _dataService.AddMusicInfo(username, artist, songsAndAlbum);
         }
 
-        public void DeleteMusicInfo(string username, string Artist, string SongsAndAlbum)
+        public void DeleteMusicInfo(string artist)
         {
-            _dataService.DeleteSong(username, Artist, SongsAndAlbum);
+            _dataService.DeleteMusicInfo(artist);
         }
 
-        public void UpdateMusicInfo(string oldArtist, string oldSongsAndALbum, string newArtist, string newSongsAndAlbum)
+        public void UpdateMusicInfo(string oldArtist, string oldSongsAndAlbum, string newArtist, string newSongsAndAlbum)
         {
-            _dataService.UpdateMusicInfo(new User { Artist = oldArtist, SongsAndAlbum = oldSongsAndALbum }, new User { Artist = newArtist, SongsAndAlbum = newSongsAndAlbum });
+            User oldUser = new User { Artist = oldArtist, SongsAndAlbum = oldSongsAndAlbum };
+            User newUser = new User { Artist = newArtist, SongsAndAlbum = newSongsAndAlbum };
+            _dataService.UpdateMusicInfo(oldUser, newUser);
         }
-    }        
+    }
 }

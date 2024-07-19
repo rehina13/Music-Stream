@@ -5,8 +5,6 @@ using MusicPlaylistDL;
 
 namespace UI
 {
- 
-
     class Program
     {
         static void Main(string[] args)
@@ -68,15 +66,14 @@ namespace UI
         {
             Console.WriteLine("Enter artist to update:");
             string artist = Console.ReadLine();
+            Console.WriteLine("Enter new artist:");
+            string newArtist = Console.ReadLine();
             Console.WriteLine("Enter new songs and album:");
-            string songsAndAlbum = Console.ReadLine();
+            string newSongsAndAlbum = Console.ReadLine();
 
-            sqlData.DeleteMusicInfo(artist);
+            sqlData.UpdateMusicInfo(new User { Artist = artist, SongsAndAlbum = newSongsAndAlbum }, new User { Artist = newArtist, SongsAndAlbum = newSongsAndAlbum });
             Console.WriteLine("Music info updated successfully.");
         }
-
-
-
 
         static void DeleteMusicInfo(SqlData sqlData)
         {
