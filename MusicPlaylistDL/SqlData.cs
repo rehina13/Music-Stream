@@ -7,7 +7,9 @@ namespace MusicPlaylistDL
 {
     public class SqlData
     {
-        static string connectionString = "Data Source=DESKTOP-JNQ2TIM;Initial Catalog=MusicPlaylistDL;Integrated Security=True;";
+        static string connectionString 
+        //= "Data Source=DESKTOP-JNQ2TIM;Initial Catalog=MusicPlaylistDL;Integrated Security=True;";
+        = "Server=tcp:20.189.112.141,1433; Database=MusicPlaylistDL; User Id=sa; Password=BSIT2-1";
 
         public static List<User> GetMusicInfo()
         {
