@@ -1,4 +1,5 @@
-﻿using System;
+﻿
+using System;
 using System.Collections.Generic;
 using Model;
 using MusicPlaylistDL;
@@ -14,8 +15,12 @@ namespace UI
 
             Console.WriteLine("Welcome to Your Music Stream Choice!");
 
+
             Console.WriteLine("Please enter your username:");
             username = Console.ReadLine();
+
+            SqlData dataService = new SqlData();
+
 
             while (true)
             {

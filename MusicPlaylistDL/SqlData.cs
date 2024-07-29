@@ -7,25 +7,33 @@ namespace MusicPlaylistDL
 {
     public class SqlData
     {
-        static string connectionString 
+        static string connectionString
         //= "Data Source=DESKTOP-JNQ2TIM;Initial Catalog=MusicPlaylistDL;Integrated Security=True;";
-        = "Server=tcp:20.189.112.141,1433; Database=MusicPlaylistDL; User Id=sa; Password=BSIT2-1";
+         = "Server=tcp:20.189.112.141,1433; Database=MusicPlaylistDL; User Id=sa; Password=BSIT2-1";
 
+
+
+        static SqlConnection sqlConnection = new SqlConnection(connectionString);
+
+        static public void Connect()
+        {
+            sqlConnection.Open();
+        }
         public static List<User> GetMusicInfo()
         {
             List<User> users = new List<User>();
 
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-            {
-                string selectStatement = "SELECT Username, Artist, SongsAndAlbum FROM MusicInfo";
+
+                string selectStatement = "SELECT username, Artist, SongsAndAlbum FROM MusicInfo";
                 SqlCommand selectCommand = new SqlCommand(selectStatement, sqlConnection);
+            sqlConnection.Open();
 
-                sqlConnection.Open();
 
-                using (SqlDataReader reader = selectCommand.ExecuteReader())
-                {
-                    while (reader.Read())
-                    {
+            SqlDataReader reader = selectCommand.ExecuteReader();
+          
+
+            while (reader.Read())
+                     {
                         users.Add(new User
                         {
                             username = reader["Username"].ToString(),
@@ -33,18 +41,16 @@ namespace MusicPlaylistDL
                             SongsAndAlbum = reader["SongsAndAlbum"].ToString()
                         });
                     }
-                }
-
-                sqlConnection.Close();
-            }
+                
+            
+            sqlConnection.Close();
 
             return users;
         }
 
         public void AddMusicInfo(string username, string artist, string songsAndAlbum)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-            {
+
                 string insertStatement = "INSERT INTO MusicInfo (Username, Artist, SongsAndAlbum) VALUES (@username, @artist, @songsAndAlbum)";
                 SqlCommand insertCommand = new SqlCommand(insertStatement, sqlConnection);
 
@@ -54,27 +60,26 @@ namespace MusicPlaylistDL
 
                 sqlConnection.Open();
                 insertCommand.ExecuteNonQuery();
-            }
+
+
+            
         }
 
         public void DeleteMusicInfo(string artist)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-            {
+
                 string deleteStatement = "DELETE FROM MusicInfo WHERE Artist = @artist";
                 SqlCommand deleteCommand = new SqlCommand(deleteStatement, sqlConnection);
 
-                deleteCommand.Parameters.AddWithValue("@artist", artist);
+                deleteCommand.Parameters.AddWithValue("@Artist", artist);
 
-                sqlConnection.Open();
-                deleteCommand.ExecuteNonQuery();
-            }
+
+            
         }
 
         public void UpdateMusicInfo(User oldUser, User newUser)
         {
-            using (SqlConnection sqlConnection = new SqlConnection(connectionString))
-            {
+
                 string updateStatement = "UPDATE MusicInfo SET Artist = @newArtist, SongsAndAlbum = @newSongsAndAlbum WHERE Artist = @oldArtist AND SongsAndAlbum = @oldSongsAndAlbum";
                 SqlCommand updateCommand = new SqlCommand(updateStatement, sqlConnection);
 
@@ -83,9 +88,8 @@ namespace MusicPlaylistDL
                 updateCommand.Parameters.AddWithValue("@oldArtist", oldUser.Artist);
                 updateCommand.Parameters.AddWithValue("@oldSongsAndAlbum", oldUser.SongsAndAlbum);
 
-                sqlConnection.Open();
-                updateCommand.ExecuteNonQuery();
-            }
+
+            
         }
     }
 }
