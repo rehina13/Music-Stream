@@ -1,8 +1,9 @@
-﻿
-using System;
+﻿using System;
 using System.Collections.Generic;
 using Model;
 using MusicPlaylistDL;
+using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace UI
 {
@@ -15,12 +16,8 @@ namespace UI
 
             Console.WriteLine("Welcome to Your Music Stream Choice!");
 
-
             Console.WriteLine("Please enter your username:");
             username = Console.ReadLine();
-
-            SqlData dataService = new SqlData();
-
 
             while (true)
             {
@@ -65,6 +62,8 @@ namespace UI
 
             sqlData.AddMusicInfo(username, artist, songsAndAlbum);
             Console.WriteLine("Music info added successfully.");
+
+            SendEmail("Music Added", $"New music by {artist} has been added by {username}.");
         }
 
         static void UpdateMusicInfo(SqlData sqlData, string username)
@@ -78,6 +77,8 @@ namespace UI
 
             sqlData.UpdateMusicInfo(new User { Artist = artist, SongsAndAlbum = newSongsAndAlbum }, new User { Artist = newArtist, SongsAndAlbum = newSongsAndAlbum });
             Console.WriteLine("Music info updated successfully.");
+
+            SendEmail("Music Updated", $"Music by {artist} has been updated to {newArtist} by {username}.");
         }
 
         static void DeleteMusicInfo(SqlData sqlData)
@@ -87,6 +88,8 @@ namespace UI
 
             sqlData.DeleteMusicInfo(artist);
             Console.WriteLine("Music info deleted successfully.");
+
+            SendEmail("Music Deleted", $"Music by {artist} has been deleted.");
         }
 
         static void ViewMusicInfo(SqlData sqlData)
@@ -97,6 +100,40 @@ namespace UI
             foreach (User user in users)
             {
                 Console.WriteLine($"Artist: {user.Artist}, Songs and Album: {user.SongsAndAlbum}");
+            }
+
+            SendEmail("Music Viewed", "Music info has been viewed.");
+        }
+
+        public static void SendEmail(string subject, string body)
+        {
+            var message = new MimeMessage();
+            message.From.Add(new MailboxAddress("FromMyNotes", "do-not-reply@frommynotes.com"));
+            message.To.Add(new MailboxAddress("Regine Cequena", "cequenaregine@gmail.com"));
+            message.Subject = subject;
+
+            message.Body = new TextPart("html")
+            {
+                Text = $"<h1>{subject}</h1><p>{body}</p>"  
+            };
+
+            using (var client = new SmtpClient())
+            {
+                try
+                {
+                    client.Connect("sandbox.smtp.mailtrap.io", 2525, MailKit.Security.SecureSocketOptions.StartTls);
+                    client.Authenticate("08e4c63d244a25", "99fbae344e73e5");
+                    client.Send(message);
+                    Console.WriteLine("Email sent successfully through Mailtrap.");
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error sending email: {ex.Message}");
+                }
+                finally
+                {
+                    client.Disconnect(true);
+                }
             }
         }
     }

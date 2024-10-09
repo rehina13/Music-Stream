@@ -8,8 +8,8 @@ namespace MusicPlaylistDL
     public class SqlData
     {
         static string connectionString
-        //= "Data Source=DESKTOP-JNQ2TIM;Initial Catalog=MusicPlaylistDL;Integrated Security=True;";
-         = "Server=tcp:20.189.112.141,1433; Database=MusicPlaylistDL; User Id=sa; Password=BSIT2-1";
+        = "Data Source=DESKTOP-JNQ2TIM;Initial Catalog=MusicPlaylistDL;Integrated Security=True";
+         //= "Server=tcp:20.189.112.141,1433; Database=MusicPlaylistDL; User Id=sa; Password=BSIT2-1";
 
 
 
@@ -58,8 +58,8 @@ namespace MusicPlaylistDL
                 insertCommand.Parameters.AddWithValue("@artist", artist);
                 insertCommand.Parameters.AddWithValue("@songsAndAlbum", songsAndAlbum);
 
-                sqlConnection.Open();
-                insertCommand.ExecuteNonQuery();
+               
+           
 
 
             
